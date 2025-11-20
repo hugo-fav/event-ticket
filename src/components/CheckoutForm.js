@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import {
   CheckoutFormDiv,
   CheckoutFormH2,
@@ -10,7 +11,8 @@ import {
   CloseButton,
 } from "@/styles/CheckoutForm";
 
-import PayButton from "./PayButton";
+// Dynamic import of PayButton (client-only)
+const PayButton = dynamic(() => import("./PayButton"), { ssr: false });
 
 export default function CheckoutForm({
   showCheckout,
@@ -19,7 +21,6 @@ export default function CheckoutForm({
 }) {
   return (
     <CheckoutFormDiv $isMobile={isMobile} $showMobile={showCheckout}>
-      {/* Close button only on mobile */}
       {isMobile && <CloseButton onClick={closeCheckout}>✕</CloseButton>}
 
       <CheckoutFormH2>Buy Event Tickets</CheckoutFormH2>

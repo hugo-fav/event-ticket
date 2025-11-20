@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 
 import {
   ImageStyle,
@@ -10,16 +11,16 @@ import {
   BannerContentHeading2,
   BannerContentParagraph,
   PayingButton,
-  Overlay
+  Overlay,
 } from "@/styles/EventBannerStyle";
 
-import CheckoutForm from "./CheckoutForm";
+// Dynamic import of CheckoutForm to avoid SSR issues
+const CheckoutForm = dynamic(() => import("./CheckoutForm"), { ssr: false });
 
 export default function EventBanner() {
   const [showCheckout, setShowCheckout] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Detect mobile screen on mount
   useEffect(() => {
     const checkScreen = () => setIsMobile(window.innerWidth <= 768);
     checkScreen();
@@ -40,11 +41,9 @@ export default function EventBanner() {
         <BannerContentHeading1>Summer Vibe Concert 2025</BannerContentHeading1>
         <BannerContentParagraph>
           Join us for an unforgettable night of music, energy, and fun at Lagos
-          Arena! Experience live performances by top artists and feel the summer
-          vibes like never before.
+          Arena!
         </BannerContentParagraph>
 
-        {/* MOBILE: Buy Ticket Button */}
         {isMobile && (
           <PayingButton onClick={() => setShowCheckout(true)}>
             Buy Ticket
@@ -52,12 +51,10 @@ export default function EventBanner() {
         )}
       </BannerContent>
 
-      {/* MOBILE overlay */}
       {isMobile && showCheckout && (
         <Overlay onClick={() => setShowCheckout(false)} />
       )}
 
-      {/* Checkout Form */}
       <CheckoutForm
         showCheckout={showCheckout}
         closeCheckout={() => setShowCheckout(false)}

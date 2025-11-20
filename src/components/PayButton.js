@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import styled from "styled-components";
 import { PaystackButton } from "react-paystack";
@@ -22,7 +23,6 @@ const EmailInput = styled.input`
   border-radius: 10px;
   font-size: 1rem;
   outline: none;
-  transition: 0.3s ease;
 
   &:focus {
     border-color: #0070f3;
@@ -44,7 +44,6 @@ const QuantityButton = styled.button`
   border-radius: 6px;
   background: #fff;
   cursor: pointer;
-  transition: 0.2s;
 
   &:hover {
     background: #f0f0f0;
@@ -63,24 +62,10 @@ const StyledPaystackButton = styled(PaystackButton)`
   border-radius: 12px;
   font-size: 17px;
   font-weight: 600;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-  transition: 0.25s;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
-  }
-
-  &:active {
-    transform: translateY(0);
-    box-shadow: none;
-  }
 `;
 
-const PayButton = () => {
+export default function PayButton() {
   const publicKey = "pk_test_7afcd1848d294a4e4a674c599bbd49dd49c1993c";
-
-  // const amount = 15000 * 100;
   const ticketPrice = 15000;
 
   const [quantity, setQuantity] = useState(1);
@@ -116,14 +101,10 @@ const PayButton = () => {
           −
         </QuantityButton>
         <QuantityValue>{quantity}</QuantityValue>
-        <QuantityButton onClick={() => setQuantity(quantity + 1)}>
-          +
-        </QuantityButton>
+        <QuantityButton onClick={() => setQuantity(quantity + 1)}>+</QuantityButton>
       </QuantitySelector>
 
       <StyledPaystackButton {...componentProps} />
     </PayContainer>
   );
-};
-
-export default PayButton;
+}
